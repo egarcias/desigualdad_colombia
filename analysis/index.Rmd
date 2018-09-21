@@ -1,9 +1,19 @@
 ---
-title: "Home"
+title: "Presentación"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
     toc: false
 ---
 
-Welcome to my research website.
+# **Reporte ejecutivo de resultados**
+
+## *Proyecto Percepciones e ideologías de la desigualdad económica en Colombia*
+
+1. Percepciones de la desigualdad económica
+
+2. Ideologías de la desigualdad económica
+
+3. Apoyo a medidas redistributivas
+
+4. Datos sociodemográficos
