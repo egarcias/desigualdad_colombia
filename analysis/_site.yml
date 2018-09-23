@@ -1,18 +1,19 @@
-name: "desigualdad_colombia"
+name: "Percepciones e ideologias de la desigualdad en Colombia"
 output_dir: "../docs"
 navbar:
-  title: "desigualdad_colombia"
+  title: "Proyecto Desigualdad Colombia"
   left:
-    - text: "Home"
+    - text: "Inicio"
       href: index.html
-    - text: "About"
+    - text: "Presentacion"
       href: about.html
-    - text: "License"
+    - text: "Resultados Descriptivos"
+      href: descriptives.html
+    - text: "Libro de codigos"
+      href: codebook.html
+    - text: "Licencia"
       href: license.html
-  right:
-    - icon: fa-github
-      href: https://github.com/jdblischak/workflowr
-output:
+  output:
   workflowr::wflow_html:
     toc: true
     toc_float: true

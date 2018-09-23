@@ -14,6 +14,8 @@ output:
 - Analizar la relación entre diferentes formas de percibir y justificar la desigualdad económica en Colombia, con el apoyo a medidas redistributivas orientadas a la reduccion de la desigualdad.  
 
 
+
+
 **Método**
 
 - **Participantes**: El cuestionario fue respondido en su totalidad por 1852 estudiantes universitarios de cinco regiones de Colombia (Bogotá, Cundinamarca y zona centro, Caribe, Valle del Cauca y Nariño) (*M~edad~ =* 22.01,  *DT~edad~ =* 5.51; 65.7% mujeres, 34.3% hombres)
@@ -23,6 +25,9 @@ output:
 - **Recoleccion de información**: Encuesta por cuestionario on-line.
 
 - **Variables**: 
+  
+  + **Actitudes hacia la redistribución de recursos**
+    - Apoyo a políticas redistributivas
   
   + **Percepciones de la desigualdad**
     - Desigualdad económica percibida (brechas de ingresos percibidas) 
@@ -35,9 +40,6 @@ output:
     - Meritocracia 
     - Justificación del sistema económico
     - Ideología política (izquierda-derecha)
-  
-  + **Actitudes hacia la redistribución de recursos**
-    - Apoyo a políticas redistributivas
   
   + **Sociodemográficas**
     - Status socioeconómico por ingresos

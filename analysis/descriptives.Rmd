@@ -184,11 +184,13 @@ ggplot(data=na.omit(data2), aes(depto2,idgap_no), na.rm=TRUE) +
                        axis.text.x  = element_text(vjust=0.5, size=12),
                        axis.title.y = element_text(face = "bold", size=16))
 ```
+
 ### Frecuencia de percepción de la desigualdad (qué tan frecuentemente percibe esas situaciones)
 
 ```{r desfrec1, echo=FALSE, message=FALSE, warning=FALSE}
 kable((describe(data2$desfrec)))
 ```
+
 
 ```{r desfrec2, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(data=na.omit(data2), aes(depto2,desfrec), na.rm=TRUE) +
@@ -210,6 +212,7 @@ ggplot(data=na.omit(data2), aes(depto2,desfrec), na.rm=TRUE) +
 kable((describe(data2$pergral)))
 ```
 
+
 ```{r pergral2, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(data=na.omit(data2), aes(depto2,pergral), na.rm=TRUE) +
   geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
@@ -223,6 +226,7 @@ ggplot(data=na.omit(data2), aes(depto2,pergral), na.rm=TRUE) +
                        axis.text.x  = element_text(vjust=0.5, size=12),
                        axis.title.y = element_text(face = "bold", size=16))
 ```
+
 ### Percepción de la desigualdad económica como comparación social (los que más tienen vs. los que menos tienen)
 
 ```{r framing1, echo=FALSE, message=FALSE, warning=FALSE}
@@ -265,11 +269,13 @@ ggplot(data=na.omit(data2), aes(depto2,merit), na.rm=TRUE) +
                        axis.text.x  = element_text(vjust=0.5, size=12),
                        axis.title.y = element_text(face = "bold", size=16))
 ```
+
 ### Justificación del sistema económico
 
 ```{r jse1, echo=FALSE, message=FALSE, warning=FALSE}
 kable((describe(data2$redis)))
 ```
+
 
 ```{r jse2, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(data=na.omit(data2), aes(depto2,jse), na.rm=TRUE) +
