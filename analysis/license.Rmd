@@ -5,6 +5,40 @@ output:
     toc: false
 ---
 
+# **Coordinadores del proyecto**
+
+Investigador principal
+**Efraín García Sánchez**, Ph.D. (candidate)
+Departamento de Psicología Social
+Centro de Investigación en Mente, Cerebro y Comportamiento
+Universidad de Granada, Granada, España.
+egarcias@correo.ugr.es
+
+
+Co-investigador
+**Erico Rentería Pérez**, Ph.D.
+Grupo de Investigación en Psicología Organizacional y del Trabajo
+Instituto de Psicología 
+Universidad del Valle, Cali, Colombia.
+erico.renteria@correounivalle.edu.co
+
+## **Colaboradores del estudio**
+
+Jorge Palacio Sañudo,	jpalacio@uninorte.edu.co,	Universidad del Norte,	Barranquilla
+Jean David Polo,	pjean@uninorte.edu.co,	Universidad del Norte,	Barranquilla
+Sonia Maritza Matabanchoy,	somapsicologa@yahoo.es,	Universidad de Nariño,	Pasto
+Ivan David Jojoa,	idjojoa@iucesmag.edu.co,	CESMAG,	Nariño
+Ninfa del Carmen Pulido Moreno,	ninfapulido@gmail.com,	Universidad Pedagógia y Tecnológica de Colombia,	Tunja
+Pedro Vásquez,	pvasquez@utb.edu.co,	Universidad Tecnológica de Bolívar,	Cartagena
+Yuli Fang Alandette,	yfang@utb.edu.co,	Universidad Tecnológica de Bolívar,	Cartagena
+Marilyn Vanegas, 	rmvanegas@ucatolica.edu.co, 	Universidad Católica de Colombia,	Bogotá
+Wilner Riascos Sánchez,	wilner.riascos@gmail.com,	Universidad de San Buenaventura,	Cali
+Martha Sabala, 	martha.sabala@correounivalle.edu.co,	Universidad del Valle, 	Palmira
+Lilibeth Pedraza,	lpedrazalvarez@gmail.com,	Universidad del Magdalena,	Magdalena
+
+
+**Pendiente por crear licencia sobre los derechos de autoría sobre los datos**
+
 What license are you using for your code? See [choosealicense.com][choose] for
 help deciding. It's a convention to save a file `LICENSE` in the root of your
 Git repo that contains the license text.

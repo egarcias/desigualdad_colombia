@@ -1,19 +1,23 @@
 ---
-title: "Presentación"
+title: "Informe Ejecutivo"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
     toc: false
 ---
 
-# **Reporte ejecutivo de resultados**
+# **Informe ejecutivo de resultados: Percepciones e ideologías de la desigualdad económica en Colombia**
 
-## *Proyecto Percepciones e ideologías de la desigualdad económica en Colombia*
+Se presenta a continuación el informe ejecutivo con los resultados descriptivos del estudio sobre percepciones e ideologías de la desigualdad en Colombia. El informe consta de las siguientes partes:
 
-1. Percepciones de la desigualdad económica
+1. Presentación general del proyecto
 
-2. Ideologías de la desigualdad económica
+2. Resultados descriptivos de cada variable discriminando por regiones
 
-3. Apoyo a medidas redistributivas
+3. Resultados descriptivos por ítems a nivel general
 
-4. Datos sociodemográficos
+4. Consideraciones generales
+
+5. Libro de códigos de la base de datos
+
+

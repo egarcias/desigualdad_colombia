@@ -4,29 +4,305 @@ output:
   workflowr::wflow_html:
     toc: true
 ---
-
-# **Rationale**
-
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## R Markdown
+# Resultados descriptivos por variables y por regiones
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+* Se presentan los resultados descriptivos de las variables que fueron medidas en el estudio. 
+* En la figura se integra un gráfico de densidad y un gráfico de cajas (*boxplot*). Así, la línea horizontal dentro de cada caje representa la media, el limite superior de la caja representa el percentil 75 y el límite inferior representa el percentil 75. Las densidades de los gráficos, que pueden ser más anchos o delgados, representan la cantidad de participantes que puntuaron en ese valor de la escala, lo cual está representado tambien en proporción a los participantes de cada región. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
+library(pacman)
+pacman::p_load(dplyr, foreign, car, ggplot2, reshape, lme4, interplot,
+                devtools,reghelper,stargazer, psych, interplot, lavaan,
+                dplyr, haven, data.table, gridExtra,reghelper, labelled, lmeresampler,
+                sjstats, sjPlot, sjlabelled,sjmisc,memisc, knitr, GPArotation, plyr, outliers,ggridges)
 ```
 
-## Including Plots
+```{r data, echo=FALSE, message=FALSE, warning=FALSE}
+library(haven)
+data2_raw <- read_sav("data/data2_raw.sav")
+data2 <- data2_raw[,c(1,15:74)]
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r recoding, echo=FALSE, message=FALSE,  warning=FALSE}
+
+##### 0.1 Recodificar variables#####
+
+## Redis7 is a reversed score item
+data2$redis7 <- to_factor(data2$redis7) ### To convert labelled data into factor, due to consntrain imposed by labelled data
+data2$redis7 <- as.numeric(data2$redis7) ### to convert factors in numeric data
+data2$redis7r <- dplyr::recode(data2$redis7, `1` = 7L, `2` = 6L, '3' = 5L, '4' = 4L, '5' = 3L, '6' = 2L, '7' = 1L) ### To recode values, so now higher values, higher the variable
+#table(data2$redis7)
+#table(data2$redis7r) ###To check if converson was conducted appropriately
+
+var_label(data2$redis7) # le asigno la etiqueta que se perdi? en alg?n momeneto de la transformaci?n de los dato
+var_label(data2$redis7) <- 'No hay ninguna necesidad de cambiar la distribuciÃ³n de ingresos econ?micos en Colombia.'
+var_label(data2$redis7r) <- 'No hay ninguna necesidad de cambiar la distribuciÃ³n de ingresos econ?micos en Colombia. (reco)'
+
+
+data2$desgral <- to_factor(data2$desgral) ### To convert labelled data into factor, due to consntrain imposed by labelled data
+data2$desgral <- as.numeric(data2$desgral) ### to convert factors in numeric data
+data2$desgralr <- dplyr::recode(data2$desgral, `1` = 7L, `2` = 6L, '3' = 5L, '4' = 4L, '5' = 3L, '6' = 2L, '7' = 1L) ### To recode values, so now higher values, higher the variable
+#table(data2$desgral)
+#table(data2$desgralr) ###To check if converson was conducted appropriately
+
+data2$desgral2 <- to_factor(data2$desgral2) ### To convert labelled data into factor, due to consntrain imposed by labelled data
+data2$desgral2 <- as.numeric(data2$desgral2) ### to convert factors in numeric data
+data2$desgral2r <- dplyr::recode(data2$desgral2, `1` = 7L, `2` = 6L, '3' = 5L, '4' = 4L, '5' = 3L, '6' = 2L, '7' = 1L) ### To recode values, so now higher values, higher the variable
+#table(data2$desgral2)
+#table(data2$desgral2r) ###To check if converson was conducted appropriately
+
+```
+
+```{r variables, echo=FALSE, message=FALSE,warning=FALSE}
+
+data2 <- data2 %>%
+  mutate(pergap = (desperal2/desperba2), # 3.1 Brecha salarial percibida
+         lnpergap = log(pergap),
+         idgap = (desidal2/desidba2), # 3.2 Brecha salarial ideal
+         lnidgap = log(idgap),
+         framing = (fram1+fram2+fram3+fram4+fram5+fram6+fram7+fram8+fram9+fram10+fram11)/11, # framing
+         menostien = (fram2+fram5+fram6+fram7+fram8+fram9)/6, # framing los que menos tienen
+         mastien = (fram1+fram3+fram4+fram10+fram11)/5, # framing los que m?s tienen
+         pergral = (desgral+desgral)/2, # percepci?n gral de la desigualdad (evaluaci?n)
+         merit = (merit1+ merit2+ merit3+ merit4+ merit5+ merit6)/6, #meritocracia
+         merit_duro = (merit1+merit2)/2, # creenia en la meritoracia
+         merit_perc = (merit3+ merit4+ merit5+ merit6)/4,
+         jse = (jse1+jse2+jse3+jse4+jse5+jse6+jse7)/7, # justficaci?n del sistema econ?mico
+         redis = (redis1+ redis2+ redis3+ redis4+ redis5+ redis6+ redis7r+ redis8+ redis9)/9, # redistribuci?n
+         redis_reg = (redis1+ redis4+ redis6+ redis7r)/4, # redistribuci?n centrado en el gobierno
+         redis_prov = (redis3+ redis5+ redis9)/3, # elimin? ?tems 2 y 8, seg?n las caracter?sticas del FA
+         )
+```
+
+```{r manipulating, echo=FALSE, message=FALSE, warning=FALSE}
+####Function to remove outliers accordint to 3*IQR####
+#https://www.linkedin.com/pulse/outlier-treatment-tukeys-method-r-swanand-marathe
+
+Remove.Outliers <- function(x, na.rm = TRUE)
+{
+  ## Find 25% and 75% Quantiles using inbuild function
+  quant <- quantile(x, probs=c(.25, .75), na.rm = na.rm)
+
+  ## Find Interquantile range and multiply it by 1.5 #Efra: I set to 3 times interquartile range
+  ## to derive factor for range calculation
+  H <- 3 * IQR(x, na.rm = na.rm)
+
+  y <- x
+
+  ## fill the outlier elements with NA
+  y[x < (quant[1] - H)] <- NA
+  y[x > (quant[2] + H)] <- NA
+
+  y
+}
+
+####Excluding outliers####
+
+data2$pergap_no <-  Remove.Outliers(data2$pergap, na.rm = TRUE) #perceived income gap
+data2$idgap_no <-  Remove.Outliers(data2$idgap, na.rm = TRUE) #ideal/just income gap
+
+
+data2$departamento[data2$departamento=="españa"] <- NA ### discarding a case from Spain
+data2$departamento[data2$departamento=="boyacá, cundinamarca y casanare"] <- "boyacá/cundin." ### Changing label boyac
+data2$depto2 <- as.factor(data2$departamento)
+data2$depto2[data2$depto2==""] <-  NA # all blanks will become NA
+data2$depto2 <- droplevels(data2$depto2) # to drop levels of the factor that are not more in the dataa
+
+
+data2 <- data2 %>%
+  mutate(lnpergap_no = log(pergap_no), #No outliers
+         lnidgap_no = log(idgap_no),  #No outliers
+         )
+```
+
+## **Actitudes hacia la redistribución de recursos**
+
+```{r redis1, echo=FALSE, message=FALSE, warning=FALSE}
+kable((describe(data2$redis)))
+```
+
+
+```{r redis2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=na.omit(data2), aes(depto2,redis), na.rm=TRUE) +
+  geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
+  stat_summary(fun.y=mean, geom="point", size=2) +
+  geom_boxplot(width=0.1) +
+  labs(title = "Figura 1. Apoyo a medidas redistributivas por regiones",
+       caption = "(Fuente: Elaboración propia)",
+       x = "Región", y = "Apoyo redistribucion de recursos") +
+    theme_bw() + theme(legend.position="none",
+                       axis.title.x = element_text(face="bold", size=16),
+                       axis.text.x  = element_text(vjust=0.5, size=12),
+                       axis.title.y = element_text(face = "bold", size=16))
+```
+
+
+## **Percepciones de la desigualdad**
+    
+### Desigualdad económica percibida (brechas de ingresos percibidas) 
+
+```{r pergapa1, echo=FALSE, message=FALSE, warning=FALSE}
+kable((describe(data2$pergap_no)))
+```
+
+
+```{r pergap2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=na.omit(data2), aes(depto2,pergap_no), na.rm=TRUE) +
+  geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
+  stat_summary(fun.y=mean, geom="point", size=2) +
+  geom_boxplot(width=0.1) +
+  labs(title = "Figura 2. Desigualdad salarial percibida (brechas)",
+       caption = "(Fuente: Elaboración propia)",
+       x = "Región", y = "Desigualdad salarial percibida") +
+    theme_bw() + theme(legend.position="none",
+                       axis.title.x = element_text(face="bold", size=16),
+                       axis.text.x  = element_text(vjust=0.5, size=12),
+                       axis.title.y = element_text(face = "bold", size=16))
+```
+
+### Desigualdad económica ideal (brechas de ingresos deseadas)
+
+```{r idgap1, echo=FALSE, message=FALSE, warning=FALSE}
+kable((describe(data2$idgap_no)))
+```
+
+```{r idgap2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=na.omit(data2), aes(depto2,idgap_no), na.rm=TRUE) +
+  geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
+  stat_summary(fun.y=mean, geom="point", size=2) +
+  geom_boxplot(width=0.1) +
+  labs(title = "Figura 3. Desigualdad salarial ideal (brechas)",
+       caption = "(Fuente: Elaboración propia)",
+       x = "Región", y = "Desigualdad salarial ideal") +
+    theme_bw() + theme(legend.position="none",
+                       axis.title.x = element_text(face="bold", size=16),
+                       axis.text.x  = element_text(vjust=0.5, size=12),
+                       axis.title.y = element_text(face = "bold", size=16))
+```
+### Frecuencia de percepción de la desigualdad (qué tan frecuentemente percibe esas situaciones)
+
+```{r desfrec1, echo=FALSE, message=FALSE, warning=FALSE}
+kable((describe(data2$desfrec)))
+```
+
+```{r desfrec2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=na.omit(data2), aes(depto2,desfrec), na.rm=TRUE) +
+  geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
+  stat_summary(fun.y=mean, geom="point", size=2) +
+  geom_boxplot(width=0.1) +
+  labs(title = "Figura 4. Frecuencia con que se percibe desigualdad económica",
+       caption = "(Fuente: Elaboración propia)",
+       x = "Región", y = "Frecuencia desigualdad percibida") +
+    theme_bw() + theme(legend.position="none",
+                       axis.title.x = element_text(face="bold", size=16),
+                       axis.text.x  = element_text(vjust=0.5, size=12),
+                       axis.title.y = element_text(face = "bold", size=16))
+```
+
+### Percepción general de la desigualdad económica (a su alrededor, en su vida cotidiana)
+
+```{r pergral1, echo=FALSE, message=FALSE, warning=FALSE}
+kable((describe(data2$pergral)))
+```
+
+```{r pergral2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=na.omit(data2), aes(depto2,pergral), na.rm=TRUE) +
+  geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
+  stat_summary(fun.y=mean, geom="point", size=2) +
+  geom_boxplot(width=0.1) +
+  labs(title = "Figura 5. Percepción general de la desigualdad económica ",
+       caption = "(Fuente: Elaboración propia)",
+       x = "Región", y = "Percepción general desigualdad") +
+    theme_bw() + theme(legend.position="none",
+                       axis.title.x = element_text(face="bold", size=16),
+                       axis.text.x  = element_text(vjust=0.5, size=12),
+                       axis.title.y = element_text(face = "bold", size=16))
+```
+### Percepción de la desigualdad económica como comparación social (los que más tienen vs. los que menos tienen)
+
+```{r framing1, echo=FALSE, message=FALSE, warning=FALSE}
+kable((describe(data2$framing)))
+```
+
+```{r framing2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=na.omit(data2), aes(depto2,framing), na.rm=TRUE) +
+  geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
+  stat_summary(fun.y=mean, geom="point", size=2) +
+  geom_boxplot(width=0.1) +
+  labs(title = "Figura 6. Percepcion de la desiugaldad económica como comparación social",
+       caption = "(Fuente: Elaboración propia)",
+       x = "Región", y = "los que más tienen vs. los que menos tienen") +
+    theme_bw() + theme(legend.position="none",
+                       axis.title.x = element_text(face="bold", size=16),
+                       axis.text.x  = element_text(vjust=0.5, size=12),
+                       axis.title.y = element_text(face = "bold", size=16))
+```
+  
+## **Ideologías**
+
+### Meritocracia 
+
+```{r merit1, echo=FALSE, message=FALSE, warning=FALSE}
+kable((describe(data2$redis)))
+```
+
+
+```{r merit2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=na.omit(data2), aes(depto2,merit), na.rm=TRUE) +
+  geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
+  stat_summary(fun.y=mean, geom="point", size=2) +
+  geom_boxplot(width=0.1) +
+  labs(title = "Figura 7. Creencias en la meritocracia (trabajo duro)",
+       caption = "(Fuente: Elaboración propia)",
+       x = "Región", y = "Meritocracia") +
+    theme_bw() + theme(legend.position="none",
+                       axis.title.x = element_text(face="bold", size=16),
+                       axis.text.x  = element_text(vjust=0.5, size=12),
+                       axis.title.y = element_text(face = "bold", size=16))
+```
+### Justificación del sistema económico
+
+```{r jse1, echo=FALSE, message=FALSE, warning=FALSE}
+kable((describe(data2$redis)))
+```
+
+```{r jse2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=na.omit(data2), aes(depto2,jse), na.rm=TRUE) +
+  geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
+  stat_summary(fun.y=mean, geom="point", size=2) +
+  geom_boxplot(width=0.1) +
+  labs(title = "Figura 8. Justificación del sistema económico",
+       caption = "(Fuente: Elaboración propia)",
+       x = "Región", y = "Justificación del sistema económico") +
+    theme_bw() + theme(legend.position="none",
+                       axis.title.x = element_text(face="bold", size=16),
+                       axis.text.x  = element_text(vjust=0.5, size=12),
+                       axis.title.y = element_text(face = "bold", size=16))
+```
+
+
+### Ideología política (izquierda-derecha)
+
+```{r ideopol1, echo=FALSE, message=FALSE, warning=FALSE}
+kable((describe(data2$ideopol)))
+```
+
+
+```{r ideopol2, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=na.omit(data2), aes(depto2,ideopol), na.rm=TRUE) +
+  geom_violin(scale="count", aes(fill = factor(depto2), alpha= 0.5)) +
+  stat_summary(fun.y=mean, geom="point", size=2) +
+  geom_boxplot(width=0.1) +
+  labs(title = "Figura 9. Ideología política (izquierda-derecha)",
+       caption = "(Fuente: Elaboración propia)",
+       x = "Región", y = "Izquierda-D") +
+    theme_bw() + theme(legend.position="none",
+                       axis.title.x = element_text(face="bold", size=16),
+                       axis.text.x  = element_text(vjust=0.5, size=12),
+                       axis.title.y = element_text(face = "bold", size=16))
+```  

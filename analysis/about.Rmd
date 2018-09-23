@@ -1,8 +1,58 @@
 ---
-title: "Descripción"
+title: "Presentación"
 output:
   workflowr::wflow_html:
     toc: false
 ---
 
-Aquí voy a presentar el proyecto mÃ¡s o menos.
+# **Presentación General del Estudio**
+
+**Objetivo**
+
+- Describir las ideologías y percepciones de la desigualdad económica en diferentes regiones del país, así como las actitudes hacia políticas orientadas a la redistribución de recursos.
+
+- Analizar la relación entre diferentes formas de percibir y justificar la desigualdad económica en Colombia, con el apoyo a medidas redistributivas orientadas a la reduccion de la desigualdad.  
+
+
+**Método**
+
+- **Participantes**: El cuestionario fue respondido en su totalidad por 1852 estudiantes universitarios de cinco regiones de Colombia (Bogotá, Cundinamarca y zona centro, Caribe, Valle del Cauca y Nariño) (*M~edad~ =* 22.01,  *DT~edad~ =* 5.51; 65.7% mujeres, 34.3% hombres)
+
+- **Diseño**: correlacional
+
+- **Recoleccion de información**: Encuesta por cuestionario on-line.
+
+- **Variables**: 
+  
+  + **Percepciones de la desigualdad**
+    - Desigualdad económica percibida (brechas de ingresos percibidas) 
+    - Desigualdad económica ideal (brechas de ingresos deseadas)
+    - Frecuencia de percepción de la desigualdad (qué tan frecuentemente percibe esas situaciones)
+    - Percepción general de la desigualdad económica (a su alrededor, en su vida cotidiana)
+    - Percepción de la desigualdad económica como comparación social (los que más tienen vs. los que menos tienen)
+  
+  + **Ideologías**
+    - Meritocracia 
+    - Justificación del sistema económico
+    - Ideología política (izquierda-derecha)
+  
+  + **Actitudes hacia la redistribución de recursos**
+    - Apoyo a políticas redistributivas
+  
+  + **Sociodemográficas**
+    - Status socioeconómico por ingresos
+    - Status socioeconómico por educación
+    - Status socioeconómico subjetivo
+    - Sexo 
+    - Edad
+  
+  
+  + **Plan de análisis**: 
+    - Análisis descriptivos (por regiones y por variables) para identificar prevalencia, frecuencias, diferencias entre regioens, etc.
+    - Análisis de correlaciones entre las variables de interés para determinar asociaciones entre variables 
+    - Análisis de regresión lineal para determinar la influencia de las variables perceptuales e ideológicas sobre la desigualdad (variables predictoras) sobre la redistribución (variable criterio)
+
+
+  + **Plan de divulgación**
+    - Publicación académica
+    - Propuestas del equipo

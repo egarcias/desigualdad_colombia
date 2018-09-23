@@ -1,0 +1,50 @@
+---
+title: "Libro de codigos"
+output:
+  workflowr::wflow_html:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = TRUE, # show warnings during codebook generation
+  message = TRUE, # show messages during codebook generation
+  error = TRUE, # do not interrupt codebook generation in case of errors,
+                # usually makes debugging easier, and sometimes half a codebook
+                # is better than none
+  echo = FALSE  # don't show the R code
+)
+ggplot2::theme_set(ggplot2::theme_bw())
+pander::panderOptions("table.split.table", Inf)
+```
+
+```{r data, echo=FALSE, message=FALSE, warning=FALSE}
+library(haven)
+data2_raw <- read_sav("data/data2_raw.sav")
+
+data2 <- data2_raw[,c(1,15:74)]
+```
+
+# Libro de codigos
+
+A continuación se presentan dos formatos de libro de códigos. El primero recoge los estadísticos descriptivos de cada ítem, así como una tabla interactiva en el que se puede navegar por las variables e información adicional. El segundo, tiene la distribucion de cada una de las respuestas en cada ítem.
+
+# Libro de codigos 1 (formato del paquete "codebook")
+
+```{r codebook1, message=FALSE, warning=FALSE, cache=TRUE}
+library(codebook)
+codebook::codebook(data2)
+```
+
+# Libro de Codigos 2 (distribuciones por items; paquete "memisc")
+
+```{r codebook, echo=FALSE, message=FALSE, warning=FALSE}
+library(memisc)
+
+data2.por <- spss.portable.file("data/data2_raw.por")
+memisc::codebook(data2.por[,c(1,15:74)])
+```
+
+
+
+
