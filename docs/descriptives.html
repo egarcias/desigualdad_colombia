@@ -184,10 +184,13 @@ $(document).ready(function () {
   <a href="index.html">Inicio</a>
 </li>
 <li>
-  <a href="about.html">Descripcion</a>
+  <a href="about.html">Presentacion</a>
 </li>
 <li>
-  <a href="descriptives.html">Resultados</a>
+  <a href="descriptives.html">Resultados Descriptivos</a>
+</li>
+<li>
+  <a href="codebook.html">Libro de codigos</a>
 </li>
 <li>
   <a href="license.html">Licencia</a>
@@ -217,15 +220,23 @@ div.section {
 
 <div id="TOC">
 <ul>
-<li><a href="#rationale"><strong>Rationale</strong></a><ul>
-<li><a href="#r-markdown">R Markdown</a></li>
-<li><a href="#including-plots">Including Plots</a></li>
+<li><a href="#resultados-descriptivos-por-variables-y-por-regiones">Resultados descriptivos por variables y por regiones</a><ul>
+<li><a href="#actitudes-hacia-la-redistribucion-de-recursos"><strong>Actitudes hacia la redistribución de recursos</strong></a></li>
+<li><a href="#percepciones-de-la-desigualdad"><strong>Percepciones de la desigualdad</strong></a><ul>
+<li><a href="#desigualdad-economica-percibida-brechas-de-ingresos-percibidas">Desigualdad económica percibida (brechas de ingresos percibidas)</a></li>
+<li><a href="#desigualdad-economica-ideal-brechas-de-ingresos-deseadas">Desigualdad económica ideal (brechas de ingresos deseadas)</a></li>
+<li><a href="#percepcion-general-de-la-desigualdad-economica-a-su-alrededor-en-su-vida-cotidiana">Percepción general de la desigualdad económica (a su alrededor, en su vida cotidiana)</a></li>
+</ul></li>
+<li><a href="#ideologias"><strong>Ideologías</strong></a><ul>
+<li><a href="#meritocracia">Meritocracia</a></li>
+<li><a href="#ideologia-politica-izquierda-derecha">Ideología política (izquierda-derecha)</a></li>
+</ul></li>
 <li><a href="#session-information">Session information</a></li>
 </ul></li>
 </ul>
 </div>
 
-<p><strong>Last updated:</strong> 2018-09-21</p>
+<p><strong>Last updated:</strong> 2018-09-23</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -249,20 +260,22 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> 844bf58 </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> 9bbffa0 </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    docs/figure/
+    Ignored:    analysis/codebook_cache/
 
 Untracked files:
     Untracked:  analysis/descriptives.log
     Untracked:  analysis/descriptives.tex
     Untracked:  code/desigualdad_colombia.R
     Untracked:  data/data2_raw.csv
+    Untracked:  data/data2_raw.por
     Untracked:  data/data2_raw.sav
+    Untracked:  figure/
 
 Unstaged changes:
     Modified:   analysis/_site.yml
@@ -273,31 +286,452 @@ Unstaged changes:
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
 </li>
 </ul>
+<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+9bbffa0
+</td>
+<td style="text-align:left;">
+egarcias
+</td>
+<td style="text-align:left;">
+2018-09-23
+</td>
+<td style="text-align:left;">
+Publish the initial files for myproject
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+c3d3c2f
+</td>
+<td style="text-align:left;">
+egarcias
+</td>
+<td style="text-align:left;">
+2018-09-21
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<p></details></p>
 <hr />
-<div id="rationale" class="section level1">
-<h1><strong>Rationale</strong></h1>
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  </code></pre>
+<div id="resultados-descriptivos-por-variables-y-por-regiones" class="section level1">
+<h1>Resultados descriptivos por variables y por regiones</h1>
+<ul>
+<li>Se presentan los resultados descriptivos de las variables que fueron medidas en el estudio.</li>
+<li>En la figura se integra un gráfico de densidad y un gráfico de cajas (<em>boxplot</em>). Así, la línea horizontal dentro de cada caje representa la media, el limite superior de la caja representa el percentil 75 y el límite inferior representa el percentil 75. Las densidades de los gráficos, que pueden ser más anchos o delgados, representan la cantidad de participantes que puntuaron en ese valor de la escala, lo cual está representado tambien en proporción a los participantes de cada región.</li>
+</ul>
+<pre><code>NULL</code></pre>
+<div id="actitudes-hacia-la-redistribucion-de-recursos" class="section level2">
+<h2><strong>Actitudes hacia la redistribución de recursos</strong></h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X1</td>
+<td align="right">1</td>
+<td align="right">1833</td>
+<td align="right">5.00103</td>
+<td align="right">0.9187607</td>
+<td align="right">5.111111</td>
+<td align="right">5.042718</td>
+<td align="right">0.8236667</td>
+<td align="right">1.111111</td>
+<td align="right">7</td>
+<td align="right">5.888889</td>
+<td align="right">-0.5442236</td>
+<td align="right">0.5749761</td>
+<td align="right">0.0214596</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/descriptives.Rmd/redis2-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="figure/descriptives.Rmd/pressure-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<div id="percepciones-de-la-desigualdad" class="section level2">
+<h2><strong>Percepciones de la desigualdad</strong></h2>
+<div id="desigualdad-economica-percibida-brechas-de-ingresos-percibidas" class="section level3">
+<h3>Desigualdad económica percibida (brechas de ingresos percibidas)</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X1</td>
+<td align="right">1</td>
+<td align="right">1794</td>
+<td align="right">19.99016</td>
+<td align="right">19.80588</td>
+<td align="right">12.80013</td>
+<td align="right">16.4476</td>
+<td align="right">13.04707</td>
+<td align="right">0.0714286</td>
+<td align="right">107.9719</td>
+<td align="right">107.9005</td>
+<td align="right">1.766844</td>
+<td align="right">3.347619</td>
+<td align="right">0.467609</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/descriptives.Rmd/pergap2-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="desigualdad-economica-ideal-brechas-de-ingresos-deseadas" class="section level3">
+<h3>Desigualdad económica ideal (brechas de ingresos deseadas)</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X1</td>
+<td align="right">1</td>
+<td align="right">1783</td>
+<td align="right">5.184764</td>
+<td align="right">4.302544</td>
+<td align="right">4</td>
+<td align="right">4.453849</td>
+<td align="right">2.9652</td>
+<td align="right">0.0066667</td>
+<td align="right">24</td>
+<td align="right">23.99333</td>
+<td align="right">1.601042</td>
+<td align="right">2.518778</td>
+<td align="right">0.1018942</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/descriptives.Rmd/idgap2-1.png" width="672" style="display: block; margin: auto;" /> ### Frecuencia de percepción de la desigualdad (qué tan frecuentemente percibe esas situaciones)</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X1</td>
+<td align="right">1</td>
+<td align="right">1912</td>
+<td align="right">5.475941</td>
+<td align="right">1.219691</td>
+<td align="right">6</td>
+<td align="right">5.566013</td>
+<td align="right">1.4826</td>
+<td align="right">2</td>
+<td align="right">7</td>
+<td align="right">5</td>
+<td align="right">-0.4742459</td>
+<td align="right">-0.4395697</td>
+<td align="right">0.0278937</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/descriptives.Rmd/desfrec2-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="percepcion-general-de-la-desigualdad-economica-a-su-alrededor-en-su-vida-cotidiana" class="section level3">
+<h3>Percepción general de la desigualdad económica (a su alrededor, en su vida cotidiana)</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X1</td>
+<td align="right">1</td>
+<td align="right">1912</td>
+<td align="right">5.847803</td>
+<td align="right">1.749443</td>
+<td align="right">7</td>
+<td align="right">6.268628</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">-1.78013</td>
+<td align="right">2.069265</td>
+<td align="right">0.0400088</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/descriptives.Rmd/pergral2-1.png" width="672" style="display: block; margin: auto;" /> ### Percepción de la desigualdad económica como comparación social (los que más tienen vs. los que menos tienen)</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X1</td>
+<td align="right">1</td>
+<td align="right">1891</td>
+<td align="right">4.227105</td>
+<td align="right">2.149533</td>
+<td align="right">4.090909</td>
+<td align="right">4.085321</td>
+<td align="right">2.156509</td>
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="right">9</td>
+<td align="right">0.5420466</td>
+<td align="right">-0.0659312</td>
+<td align="right">0.0494309</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/descriptives.Rmd/framing2-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="ideologias" class="section level2">
+<h2><strong>Ideologías</strong></h2>
+<div id="meritocracia" class="section level3">
+<h3>Meritocracia</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X1</td>
+<td align="right">1</td>
+<td align="right">1833</td>
+<td align="right">5.00103</td>
+<td align="right">0.9187607</td>
+<td align="right">5.111111</td>
+<td align="right">5.042718</td>
+<td align="right">0.8236667</td>
+<td align="right">1.111111</td>
+<td align="right">7</td>
+<td align="right">5.888889</td>
+<td align="right">-0.5442236</td>
+<td align="right">0.5749761</td>
+<td align="right">0.0214596</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/descriptives.Rmd/merit2-1.png" width="672" style="display: block; margin: auto;" /> ### Justificación del sistema económico</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X1</td>
+<td align="right">1</td>
+<td align="right">1833</td>
+<td align="right">5.00103</td>
+<td align="right">0.9187607</td>
+<td align="right">5.111111</td>
+<td align="right">5.042718</td>
+<td align="right">0.8236667</td>
+<td align="right">1.111111</td>
+<td align="right">7</td>
+<td align="right">5.888889</td>
+<td align="right">-0.5442236</td>
+<td align="right">0.5749761</td>
+<td align="right">0.0214596</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/descriptives.Rmd/jse2-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ideologia-politica-izquierda-derecha" class="section level3">
+<h3>Ideología política (izquierda-derecha)</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">vars</th>
+<th align="right">n</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">median</th>
+<th align="right">trimmed</th>
+<th align="right">mad</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">range</th>
+<th align="right">skew</th>
+<th align="right">kurtosis</th>
+<th align="right">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X1</td>
+<td align="right">1</td>
+<td align="right">1670</td>
+<td align="right">3.497605</td>
+<td align="right">1.193524</td>
+<td align="right">4</td>
+<td align="right">3.467066</td>
+<td align="right">1.4826</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">0.1155512</td>
+<td align="right">0.5315046</td>
+<td align="right">0.0292061</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figure/descriptives.Rmd/ideopol2-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.5.1 (2018-07-02)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 Running under: Windows 10 x64 (build 17134)
@@ -312,14 +746,52 @@ locale:
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+ [1] ggridges_0.5.0        outliers_0.14         plyr_1.8.4           
+ [4] GPArotation_2014.11-1 knitr_1.20            memisc_0.99.14.9     
+ [7] lattice_0.20-35       sjmisc_2.7.4          sjlabelled_1.0.13    
+[10] sjPlot_2.6.0          sjstats_0.17.0        lmeresampler_0.1.0   
+[13] labelled_1.1.0        gridExtra_2.3         data.table_1.11.4    
+[16] haven_1.1.2           lavaan_0.6-2          psych_1.8.4          
+[19] stargazer_5.2.2       reghelper_0.3.4       devtools_1.13.6      
+[22] interplot_0.2.1       arm_1.10-1            MASS_7.3-50          
+[25] abind_1.4-5           lme4_1.1-17           Matrix_1.2-14        
+[28] reshape_0.8.7         ggplot2_3.0.0         car_3.0-0            
+[31] carData_3.0-1         foreign_0.8-70        dplyr_0.7.6          
+[34] pacman_0.4.6         
+
 loaded via a namespace (and not attached):
- [1] workflowr_1.1.1   Rcpp_0.12.18      digest_0.6.15    
- [4] rprojroot_1.3-2   R.methodsS3_1.7.1 backports_1.1.2  
- [7] git2r_0.23.0      magrittr_1.5      evaluate_0.11    
-[10] stringi_1.1.7     whisker_0.3-2     R.oo_1.22.0      
-[13] R.utils_2.6.0     rmarkdown_1.10    tools_3.5.1      
-[16] stringr_1.3.1     yaml_2.2.0        compiler_3.5.1   
-[19] htmltools_0.3.6   knitr_1.20       </code></pre>
+ [1] TH.data_1.0-9         minqa_1.2.4           colorspace_1.3-2     
+ [4] modeltools_0.2-22     rio_0.5.10            rprojroot_1.3-2      
+ [7] estimability_1.3      snakecase_0.9.1       base64enc_0.1-3      
+[10] glmmTMB_0.2.2.0       mvtnorm_1.0-8         coin_1.2-2           
+[13] codetools_0.2-15      splines_3.5.1         R.methodsS3_1.7.1    
+[16] mnormt_1.5-5          effects_4.0-2         bayesplot_1.6.0      
+[19] workflowr_1.1.1       nloptr_1.0.4          ggeffects_0.5.0      
+[22] interactionTest_1.0.1 broom_0.5.0           R.oo_1.22.0          
+[25] readr_1.1.1           compiler_3.5.1        emmeans_1.2.3        
+[28] backports_1.1.2       assertthat_0.2.0      lazyeval_0.2.1       
+[31] survey_3.33-2         htmltools_0.3.6       tools_3.5.1          
+[34] bindrcpp_0.2.2        coda_0.19-1           gtable_0.2.0         
+[37] glue_1.3.0            Rcpp_0.12.18          cellranger_1.1.0     
+[40] nlme_3.1-137          stringr_1.3.1         openxlsx_4.1.0       
+[43] stringdist_0.9.5.1    zoo_1.8-3             scales_0.5.0         
+[46] hms_0.4.2             parallel_3.5.1        sandwich_2.4-0       
+[49] pwr_1.2-2             TMB_1.7.14            yaml_2.2.0           
+[52] curl_3.2              memoise_1.1.0         stringi_1.1.7        
+[55] highr_0.7             zip_1.0.0             repr_0.15.0          
+[58] rlang_0.2.1           pkgconfig_2.0.1       evaluate_0.11        
+[61] purrr_0.2.5           prediction_0.3.6      bindr_0.1.1          
+[64] labeling_0.3          tidyselect_0.2.4      magrittr_1.5         
+[67] R6_2.2.2              multcomp_1.4-8        RLRsim_3.1-3         
+[70] pillar_1.3.0          whisker_0.3-2         withr_2.1.2          
+[73] mgcv_1.8-24           nnet_7.3-12           survival_2.42-3      
+[76] tibble_1.4.2          modelr_0.1.2          crayon_1.3.4         
+[79] rmarkdown_1.10        grid_3.5.1            readxl_1.1.0         
+[82] pbivnorm_0.6.0        git2r_0.23.0          forcats_0.3.0        
+[85] digest_0.6.15         nlmeU_0.70-3          xtable_1.8-2         
+[88] tidyr_0.8.1           R.utils_2.6.0         stats4_3.5.1         
+[91] munsell_0.5.0        </code></pre>
 </div>
 </div>
 
